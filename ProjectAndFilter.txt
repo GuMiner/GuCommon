@@ -98,7 +98,7 @@ Filter:
     <Filter Include="gucommon\text">
       <UniqueIdentifier>{9996c033-93dd-45a1-ad5e-ae985626bca7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="vertex">
+    <Filter Include="gucommon\vertex">
       <UniqueIdentifier>{b324fae5-2daa-43c0-8762-d0ad84c89501}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
