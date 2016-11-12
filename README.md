@@ -9,7 +9,7 @@ The author suggests downloading this code as a submodule and integrating the cod
 
 To integrate this code in your own application:
 1. Download the dependencies -- put libraries and include files in your project.
-2. 'git submodule https://github.com/GuMiner/GuCommon.git'
+2. 'git submodule add https://github.com/GuMiner/GuCommon.git'
 3. 'git submodule init'
 4. 'git submodule update'
 5. Add "gucommon" to your VS project include search list.

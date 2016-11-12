@@ -2,6 +2,7 @@
 #include <vector>
 #include <GL/glew.h>
 
+// Handles loading and deleting shaders from a common 'shaders' folder
 class ShaderFactory
 {
     bool ReadShader(const char *rootName, const char *extension, std::string* readShader);
