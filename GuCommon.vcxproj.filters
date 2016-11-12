@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="logging">
+      <UniqueIdentifier>{e833b126-0ab2-45a1-ab0c-cff558aea342}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{dc2c58fb-c191-4a7e-9855-c3d5b9a6f3c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="strings">
+      <UniqueIdentifier>{4509ff3d-1fa5-4372-8147-631f65fa93f0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="logging\Logger.h">
+      <Filter>logging</Filter>
+    </ClInclude>
+    <ClInclude Include="shaders\ShaderFactory.h">
+      <Filter>shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="strings\StringUtils.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="logging\Logger.cpp">
+      <Filter>logging</Filter>
+    </ClCompile>
+    <ClCompile Include="shaders\ShaderFactory.cpp">
+      <Filter>shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="strings\StringUtils.cpp">
+      <Filter>strings</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
