@@ -39,7 +39,7 @@ Filter:
       <Filter>gucommon\logging</Filter>
     </ClCompile>
     <ClCompile Include="text\SentenceManager.cpp">
-      <Filter>text</Filter>
+      <Filter>gucommon\text</Filter>
     </ClCompile>
   </ItemGroup>
 

@@ -29,7 +29,7 @@ protected:
     void InitializeToLocation(GLuint layoutPosition)
     {
         glGenBuffers(1, &buffer);
-        layoutPosition = layoutPosition;
+        this->layoutPosition = layoutPosition;
     }
 
 public:
