@@ -1,0 +1,63 @@
+--------
+Project:
+--------
+<ItemGroup>
+<ClCompile Include="GuCommon\logging\Logger.cpp" />
+<ClCompile Include="GuCommon\shaders\ShaderFactory.cpp" />
+<ClCompile Include="GuCommon\stb\stb_implementations.cpp" />
+<ClCompile Include="GuCommon\strings\StringUtils.cpp" />
+</ItemGroup>
+
+<ItemGroup>
+<ClInclude Include="GuCommon\logging\Logger.h" />
+<ClInclude Include="GuCommon\shaders\ShaderFactory.h" />
+<ClInclude Include="GuCommon\strings\StringUtils.h" />
+</ItemGroup>
+
+-------
+Filter:
+-------
+  <ItemGroup>
+    <ClCompile Include="GuCommon\stb\stb_implementations.cpp">
+      <Filter>gucommon\stb</Filter>
+    </ClCompile>
+    <ClCompile Include="GuCommon\strings\StringUtils.cpp">
+      <Filter>gucommon\strings</Filter>
+    </ClCompile>
+    <ClCompile Include="GuCommon\shaders\ShaderFactory.cpp">
+      <Filter>gucommon\shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="GuCommon\logging\Logger.cpp">
+      <Filter>gucommon\logging</Filter>
+    </ClCompile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ClInclude Include="GuCommon\strings\StringUtils.h">
+      <Filter>gucommon\strings</Filter>
+    </ClInclude>
+    <ClInclude Include="GuCommon\shaders\ShaderFactory.h">
+      <Filter>gucommon\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="GuCommon\logging\Logger.h">
+      <Filter>gucommon\logging</Filter>
+    </ClInclude>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Filter Include="gucommon">
+      <UniqueIdentifier>{6dac9a51-7fdb-45fa-a958-f3835ac819df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gucommon\stb">
+      <UniqueIdentifier>{523f6840-8462-4523-add4-b068a9b805af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gucommon\strings">
+      <UniqueIdentifier>{539cb3fe-c102-4b44-bfd7-8ba7240ebf05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gucommon\logging">
+      <UniqueIdentifier>{ba9dd763-44f0-4c21-922b-ff3f56742143}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gucommon\shaders">
+      <UniqueIdentifier>{baade055-85c6-4695-b00a-2edff2bb8850}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
