@@ -150,27 +150,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="logging\Logger.cpp" />
-    <ClCompile Include="shaders\ShaderFactory.cpp" />
-    <ClCompile Include="stb\stb_implementations.cpp" />
-    <ClCompile Include="strings\StringUtils.cpp" />
-    <ClCompile Include="text\SentenceManager.cpp" />
+    <ClCompile Include="logging\*.cpp" />
+    <ClCompile Include="shaders\*.cpp" />
+    <ClCompile Include="stb\*.cpp" />
+    <ClCompile Include="strings\*.cpp" />
+    <ClCompile Include="text\*.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="data\TextDataTypes.h" />
-    <ClInclude Include="logging\Logger.h" />
-    <ClInclude Include="shaders\ShaderFactory.h" />
-    <ClInclude Include="strings\StringUtils.h" />
-    <ClInclude Include="text\SentenceManager.h" />
-    <ClInclude Include="vertex\ColorVbo.hpp" />
-    <ClInclude Include="vertex\PositionVbo.hpp" />
-    <ClInclude Include="vertex\UvVbo.hpp" />
-    <ClInclude Include="vertex\VboBase.hpp" />
-    <ClInclude Include="vertex\VboHelper.hpp" />
+    <ClInclude Include="data\*.h" />
+    <ClInclude Include="logging\*.h" />
+    <ClInclude Include="shaders\*.h" />
+    <ClInclude Include="strings\*.h" />
+    <ClInclude Include="text\*.h" />
+    <ClInclude Include="vertex\*.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="text\sentenceRender.fs" />
-    <None Include="text\sentenceRender.vs" />
+    <None Include="text\*.fs" />
+    <None Include="text\*.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
