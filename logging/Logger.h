@@ -1,18 +1,29 @@
 #pragma once
+#include <fstream>
+#include <iostream>
 #include <mutex>
 #include <string>
 #include <sstream>
-#include <fstream>
+#include <vector>
+#include <glm\vec2.hpp>
+#include <glm\vec3.hpp>
+#include <glm\mat4x4.hpp>
 
 // A simple class for logging program events out to a file.
 class Logger
 {
+    static bool multilineArrays;
+
+    std::string NoCategory;
+    bool mirrorToConsole;
+    std::vector<std::string> categoryList;
+
 public:
     enum LogType { INFO, WARN, ERR };
     static Logger *LogStream;
 
     // Creates and logs the startup text
-    Logger(const char* fileName);
+    Logger(const char* fileName, bool mirrorToConsole, std::vector<std::string> categoryList);
 
     // Various convenient logging methods.
     template<typename T>
@@ -62,6 +73,9 @@ public:
 
     // Control methods for the static Logging instance.
     static void Setup(std::string logName);
+    static void Setup(std::string logName, bool mirrorToConsole);
+    static void Setup(std::string logName, bool mirrorToConsole, std::vector<std::string> categoryList);
+    static void Setup(std::string logName, bool mirrorToConsole, std::vector<std::string> categoryList, bool dontMultilineArrays);
     static void Shutdown();
 
     // Destructs the logger
@@ -84,12 +98,41 @@ private:
         return streamData.str();
     }
 
+    // Customizations to support compliated types
+    template<>
+    static std::string FormFullLogMessage<glm::vec3>(glm::vec3 message)
+    {
+        std::stringstream streamData;
+        streamData << "[" << message.x << ", " << message.y << ", " << message.z << "]";
+        return streamData.str();
+    }
+
+    template<>
+    static std::string FormFullLogMessage<glm::vec2>(glm::vec2 message)
+    {
+        std::stringstream streamData;
+        streamData << "[" << message.x << ", " << message.y << "]";
+        return streamData.str();
+    }
+
+    template<>
+    static std::string FormFullLogMessage<glm::mat4>(glm::mat4 message)
+    {
+        std::string separatorChar = multilineArrays ? "\n" : ",";
+        std::stringstream streamData;
+        streamData << "[[" << message[0][0] << ", " << message[0][1] << ", " << message[0][2] << ", " << message[0][3] << "]" << separatorChar 
+                   << "[" << message[1][0] << ", " << message[1][1] << ", " << message[1][2] << ", " << message[1][3] << "]" << separatorChar
+                   << "[" << message[2][0] << ", " << message[2][1] << ", " << message[2][2] << ", " << message[2][3] << "]" << separatorChar
+                   << "[" << message[3][0] << ", " << message[3][1] << ", " << message[3][2] << ", " << message[3][3] << "]]";
+        return streamData.str();
+    }
+
      // Uses variadic templates to form a full log message.
     template<typename T, typename... Remainder>
     static std::string FormFullLogMessage(T message, Remainder... remainder)
     {
         std::stringstream streamData;
-        streamData << message << Logger::FormFullLogMessage(remainder...);
+        streamData << Logger::FormFullLogMessage(message) << Logger::FormFullLogMessage(remainder...);
         return streamData.str();
     }
 
@@ -97,7 +140,7 @@ private:
     void LogInternal(LogType logType, const char* message);
 
     // Logs the current time out to the log file.
-    void LogTime();
+    std::string LogTime();
 
     // Retrieve the log type given the enumeration.
     const char* GetLogType(LogType logType);
