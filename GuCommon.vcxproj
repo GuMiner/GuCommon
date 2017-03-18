@@ -151,6 +151,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="logging\*.cpp" />
+    <ClCompile Include="midi\*.cpp" />
     <ClCompile Include="shaders\*.cpp" />
     <ClCompile Include="stb\*.cpp" />
     <ClCompile Include="strings\*.cpp" />
@@ -159,6 +160,7 @@
   <ItemGroup>
     <ClInclude Include="data\*.h" />
     <ClInclude Include="logging\*.h" />
+    <ClInclude Include="midi\*.h" />
     <ClInclude Include="shaders\*.h" />
     <ClInclude Include="strings\*.h" />
     <ClInclude Include="text\*.h" />
