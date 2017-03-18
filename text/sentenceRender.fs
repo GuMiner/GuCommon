@@ -10,8 +10,16 @@ in VS_OUT
     vec2 texPos;
 } fs_in;
 
+// Render our text with a sharp boundary.
 void main(void)
 {
-    // Scale each color of the provided object by the given color.
     color = fs_in.color * texture2D(fontimage, fs_in.texPos);
+    if (color.a > 0.20)
+    {
+        color.a = 1.0f;
+    }
+    else
+    {
+        color.a = 0.0f;
+    }
 }

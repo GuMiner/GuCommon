@@ -5,6 +5,7 @@
 #include <stb\stb_truetype.h>
 #include <stb\stb_image.h>
 #include <stb\stb_image_write.h>
+#include <glm\vec2.hpp>
 #include <glm\vec3.hpp>
 #include <glm\mat4x4.hpp>
 #include "data\TextDataTypes.h"
@@ -53,12 +54,16 @@ public:
     bool LoadFont(ShaderFactory* shaderManager, const char* fontName);
 
     int CreateNewSentence();
+    
+    void UpdateSentence(int sentenceId, const std::string& sentence);
     void UpdateSentence(int sentenceId, const std::string& sentence, int pixelHeight, glm::vec3 textColor);
     void RenderSentence(int sentenceId, const glm::mat4& perpective, const glm::mat4& mvMatrix);
-    void DeleteSentence(int sentenceId);
+
+    glm::vec2 GetSentenceDimensions(int sentenceId);
 
     float SimulateSentenceLength(const std::string& sentence, int pixelHeight);
-
+    
+    void DeleteSentence(int sentenceId);
     ~SentenceManager();
 };
 

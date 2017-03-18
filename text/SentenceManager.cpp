@@ -146,29 +146,19 @@ void SentenceManager::AllocateSentenceVertices(const std::string& sentence, int 
     float lastZPos = 0.0f;
     float lastXPos = 0.0f;
 
-    float vertScale = 1.0f;
-
-    // Scale the vertical scale according to the tallest character.
-    int maxHeight;
-    for (int i = 0; i < (int)sentence.size(); i++)
-    {
-        CharInfo& charInfo = GetCharacterInfo(pixelHeight, sentence[i]);
-        if (i == 0)
-        {
-            vertScale = 1.0f / (float)charInfo.height;
-            maxHeight = charInfo.height;
-        }
-        else if (charInfo.height > maxHeight)
-        {
-            vertScale = 1.0f / (float)charInfo.height;
-            maxHeight = charInfo.height;
-        }
-    }
+    // We use a constant scale so that 12-pt font is a reasonable size.
+    float vertScale = 0.1f * (float)pixelHeight / 12.0f;
 
     // Render out all our characters
+    int maxHeight = std::numeric_limits<int>::min();
     for (int i = 0; i < (int)sentence.size(); i++)
     {
+        // Save the maximum height to generate borders.
         CharInfo& charInfo = GetCharacterInfo(pixelHeight, sentence[i]);
+        if (charInfo.height > maxHeight)
+        {
+            maxHeight = charInfo.height;
+        }
 
         // Character vertex positions.
         float effectiveWidth = vertScale * (float)charInfo.width;
@@ -200,7 +190,7 @@ void SentenceManager::AllocateSentenceVertices(const std::string& sentence, int 
         lastXPos += advanceWidth;
     }
 
-    sentenceInfo.sentenceLength = lastXPos;
+    sentenceInfo.sententenceSize = glm::vec2(lastXPos, vertScale * (float)maxHeight);
 }
 
 // Simulates the length of a sentence if it was made with the given text and pixel height.
@@ -256,6 +246,12 @@ int SentenceManager::CreateNewSentence()
     return nextSentenceId - 1;
 }
 
+void SentenceManager::UpdateSentence(int sentenceId, const std::string& sentence)
+{
+    SentenceInfo& sentenceInfo = sentences[sentenceId];
+    UpdateSentence(sentenceId, sentence, sentenceInfo.fontSize, sentenceInfo.textColor);
+}
+
 // Updates the graphical components of a sentence so it can be drawn.
 void SentenceManager::UpdateSentence(int sentenceId, const std::string& sentence, int pixelHeight, glm::vec3 textColor)
 {
@@ -287,6 +283,9 @@ void SentenceManager::UpdateSentence(int sentenceId, const std::string& sentence
 
     sentenceInfo.characterStartIndices = startingElements;
     sentenceInfo.characterVertexCounts = elementCounts;
+
+    sentenceInfo.fontSize = pixelHeight;
+    sentenceInfo.textColor = textColor;
 }
 
 // Renders the specified sentence.
@@ -313,6 +312,11 @@ void SentenceManager::RenderSentence(int sentenceId, const glm::mat4& perpective
 
     // Draw the text
     glMultiDrawArrays(GL_TRIANGLE_FAN, sentenceInfo.characterStartIndices, sentenceInfo.characterVertexCounts, sentenceInfo.characterCount);
+}
+
+glm::vec2 SentenceManager::GetSentenceDimensions(int sentenceId)
+{
+    return sentences[sentenceId].sententenceSize;
 }
 
 void SentenceManager::ClearCharacterData(const SentenceInfo& sentenceInfo)

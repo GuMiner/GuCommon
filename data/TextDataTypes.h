@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include <GL/glew.h>
+#include <glm\mat4x4.hpp>
 #include "vertex\ColorVbo.hpp"
 #include "vertex\PositionVbo.hpp"
 #include "vertex\UvVbo.hpp"
@@ -53,11 +54,15 @@ struct SentenceInfo
     GLint *characterStartIndices;
     GLsizei *characterVertexCounts;
 
-    // Length in terms of pixels of texture (horizontal) consumed by the string.
-    float sentenceLength;
+    // Dimensions in terms of pixels fo texture consumed by the sentence.
+    glm::vec2 sententenceSize;
+
+    // Font size and color of the sentence.
+    int fontSize;
+    glm::vec3 textColor;
 
     SentenceInfo()
-        : characterCount(0), characterStartIndices(nullptr), characterVertexCounts(nullptr), sentenceLength(0.0f)
+        : characterCount(0), characterStartIndices(nullptr), characterVertexCounts(nullptr)
     {
     }
 };
