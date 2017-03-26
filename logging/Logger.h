@@ -19,13 +19,34 @@ class Logger
     std::vector<std::string> categoryList;
 
 public:
-    enum LogType { INFO, WARN, ERR };
+    enum LogType { DEBUG = 0, INFO = 1, WARN = 2, ERR = 3 };
     static Logger *LogStream;
+
+    // Defines the log level for console logs.
+    LogType logLevel;
+
+    // If true, the log level is stuck to WARN and includes files logs. 'logLevel' is ignored.
+    bool release;
 
     // Creates and logs the startup text
     Logger(const char* fileName, bool mirrorToConsole, std::vector<std::string> categoryList);
 
     // Various convenient logging methods.
+    template<typename T>
+    static void LogDebug(T message)
+    {
+        std::stringstream stringifiedMessage;
+        stringifiedMessage << message;
+        LogStream->LogInternal(LogType::DEBUG, stringifiedMessage.str().c_str());
+    }
+
+    template<typename T, typename... Remainder>
+    static void LogDebug(T message, Remainder... remainder)
+    {
+        std::string fullMessage = FormFullLogMessage(message, remainder...);
+        LogStream->LogInternal(LogType::DEBUG, fullMessage.c_str());
+    }
+    
     template<typename T>
     static void Log(T message)
     {

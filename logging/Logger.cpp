@@ -24,6 +24,8 @@ void Logger::Setup(std::string logName, bool mirrorToConsole, std::vector<std::s
 {
     Logger::multilineArrays = multilineArrays;
     LogStream = new Logger(logName.c_str(), mirrorToConsole, categoryList);
+    LogStream->logLevel = LogType::INFO;
+    LogStream->release = false;
 }
 
 void Logger::Shutdown()
@@ -46,18 +48,21 @@ Logger::Logger(const char* fileName, bool mirrorToConsole, std::vector<std::stri
 // Logs a message out the logger
 void Logger::LogInternal(LogType logType, const char* message)
 {
-    writeLock.lock();
-
-    std::stringstream logLines;
-    logLines << LogTime() << GetLogType(logType) << message << std::endl;
-    logFile << logLines.str();
-    if (mirrorToConsole)
+    // Only log at all if we're not in release mode or we're in release mode and this is an important error.
+    if ((release && logType >= LogType::WARN) || !release)
     {
-        std::cout << logLines.str();
-    }
-    
+        writeLock.lock();
+        std::stringstream logLines;
+        logLines << LogTime() << GetLogType(logType) << message << std::endl;
+        logFile << logLines.str();
+        if (mirrorToConsole && logType >= this->logLevel)
+        {
+            // Only mirror to console if we've enabled it and this greater than the specified logging level.
+            std::cout << logLines.str();
+        }
 
-    writeLock.unlock();
+        writeLock.unlock();
+    }
 }
 
 // Logs the current time out to the log file.
@@ -79,15 +84,17 @@ const char* Logger::GetLogType(LogType logType)
 {
     switch (logType)
     {
+    case LogType::DEBUG:
+        return "dbg: ";
     case LogType::INFO:
-        return "info: ";
+        return "inf: ";
     case LogType::WARN:
-        return "warn: ";
+        return "wrn: ";
     case LogType::ERR:
-        return "error: ";
+        return "err: ";
     }
 
-    return "extreme_error: ";
+    return "bug: ";
 }
 
 Logger::~Logger()
