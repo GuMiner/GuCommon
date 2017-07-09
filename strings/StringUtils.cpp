@@ -256,7 +256,7 @@ std::string StringUtils::GetNiceByteValue(long long byteAmount)
         "PB"
     };
 
-    short amounts[] =
+    long long amounts[] =
     {
         0, 0, 0, 0, 0, 0 // bytes to Pb.
     };
