@@ -2,10 +2,14 @@
 #include <string>
 #include <map>
 #include <vector>
+#include "testing\ITestable.h"
 
-class StringUtils
+class StringUtils : public ITestable
 {
 public:
+    StringUtils();
+    bool Test();
+
     static const char Newline = '\n';
     static const char Space = ' ';
     static const char* Comment;
@@ -42,4 +46,7 @@ public:
 
     // Attempts to parse a double from a string.
     static bool ParseFloatFromString(const std::string& stringToParse, float& value);
+
+    // Converts a value in bytes to a human-friendly byte string. ie, 1025 => 1 kB + 1 byte, etc.
+    static std::string GetNiceByteValue(long long byteAmount);
 };

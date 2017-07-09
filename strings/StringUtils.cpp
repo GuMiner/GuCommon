@@ -169,3 +169,121 @@ bool StringUtils::ParseFloatFromString(const std::string& stringToParse, float& 
     value = (float)atof(stringToParse.c_str());
     return true;
 }
+
+StringUtils::StringUtils()
+{
+}
+
+bool StringUtils::Test()
+{
+    // Test some well-known byte amounts
+    std::string result = GetNiceByteValue(0);
+    if (std::string("0 bytes").compare(result) != 0)
+    {
+        Logger::LogError("0 bytes test failure, got: ", result);
+        return false;
+    }
+
+    result = GetNiceByteValue(1);
+    if (std::string("1 bytes").compare(result) != 0)
+    {
+        Logger::LogError("0 bytes test failure, got: ", result);
+        return false;
+    }
+
+    result = GetNiceByteValue(1024);
+    if (std::string("1 kB").compare(result) != 0)
+    {
+        Logger::LogError("1 kB test failure, got: ", result);
+        return false;
+    }
+
+    result = GetNiceByteValue(1025);
+    if (std::string("1 kB + 1 bytes").compare(result) != 0)
+    {
+        Logger::LogError("1kB + 1 bytes test failure, got: ", result);
+        return false;
+    }
+
+    result = GetNiceByteValue(1048576);
+    if (std::string("1 MB").compare(result) != 0)
+    {
+        Logger::LogError("1 MB test failure, got: ", result);
+        return false;
+    }
+
+    result = GetNiceByteValue(1048577);
+    if (std::string("1 MB + 1 bytes").compare(result) != 0)
+    {
+        Logger::LogError("1 MB + 1 bytes test failure, got: ", result);
+        return false;
+    }
+
+    result = GetNiceByteValue(1099511627776);
+    if (std::string("1 TB").compare(result) != 0)
+    {
+        Logger::LogError("1 TB test failure, got: ", result);
+        return false;
+    }
+
+    result = GetNiceByteValue(1125899906842625);
+    if (std::string("1 PB + 1 bytes").compare(result) != 0)
+    {
+        Logger::LogError("1 PB + 1 bytes test failure, got: ", result);
+        return false;
+    }
+
+    result = GetNiceByteValue(1152921504606846976);
+    if (std::string("1024 PB").compare(result) != 0)
+    {
+        Logger::LogError("1024 PB test failure, got: ", result);
+        return false;
+    }
+
+    return true;
+}
+
+std::string StringUtils::GetNiceByteValue(long long byteAmount)
+{
+    // Decompose our byte amount into subamounts.
+    const char* scales[] = 
+    {
+        "bytes",
+        "kB",
+        "MB",
+        "GB",
+        "TB",
+        "PB"
+    };
+
+    short amounts[] =
+    {
+        0, 0, 0, 0, 0, 0 // bytes to Pb.
+    };
+
+    char currentScale = 0;
+    while (byteAmount != 0 && currentScale < 5)
+    {
+        amounts[currentScale] = byteAmount % 1024;
+        byteAmount /= 1024;
+        ++currentScale;
+    }
+
+    amounts[currentScale] = byteAmount;
+
+    // Output those amounts, skipping zeros unless the only result is a zero.
+    bool isFirst = true;
+    bool outputAny = false;
+    std::stringstream textStream;
+    for (int i = 5; i >= 0; i--)
+    {
+        if (amounts[i] != 0 || (!outputAny && i == 0))
+        {
+            textStream << (!isFirst ? " + " : "") << amounts[i] << " " << scales[i];
+            outputAny = true;
+            isFirst = false;
+        }
+    }
+
+    return textStream.str();
+}
