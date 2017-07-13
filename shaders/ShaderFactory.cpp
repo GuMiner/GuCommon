@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <sstream>
 #include "logging\Logger.h"
 #include "strings\StringUtils.h"
@@ -18,6 +19,47 @@ bool ShaderFactory::ReadShader(const char *rootName, const char *extension, std:
         Logger::LogError("Could not load ", extension, " shader: ", *readShader, "!");
         return false;
     }
+
+    // Implement a non-standard #include definition to avoid shader duplication.
+    std::vector<std::string> lines;
+    StringUtils::Split(*readShader, StringUtils::Newline, true, lines);
+    for (int i = lines.size() - 1; i >= 0; i--)
+    {
+        if (StringUtils::StartsWith(lines[i], "#include "))
+        {
+            std::string includeFileName;
+            if (!StringUtils::SplitAndGrabSecondary(lines[i], includeFileName))
+            {
+                Logger::LogError("Could not split ", includeFileName, " from shader ", rootName, " for include parsing!");
+                return false;
+            }
+
+            // Only allow (and remove) double quotes.
+            includeFileName.erase(std::remove(includeFileName.begin(), includeFileName.end(), '"'), includeFileName.end());
+
+            std::stringstream includeFilenameStream;
+            includeFilenameStream << "shaders/" << includeFileName;
+
+            std::string shaderIncludeFile;
+            if (!StringUtils::LoadStringFromFile(includeFilenameStream.str().c_str(), shaderIncludeFile))
+            {
+                Logger::LogError("Could not load ", includeFileName, "as part of ", rootName, "!");
+                return false;
+            }
+
+            // Drop in our include file.
+            auto erasalPosition = lines.erase(lines.begin() + i);
+            lines.insert(erasalPosition, shaderIncludeFile);
+        }
+    }
+
+    std::stringstream resultStream;
+    for (std::string line : lines)
+    {
+        resultStream << line << std::endl;
+    }
+
+    *readShader = resultStream.str();
 
     return true;
 }
