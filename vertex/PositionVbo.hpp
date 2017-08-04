@@ -6,7 +6,15 @@
 
 class PositionVbo : public VboBase<glm::vec3>
 {
+    GLenum usageType;
+
 public:
+    PositionVbo(GLenum usageType = GL_DYNAMIC_DRAW)
+        : usageType(usageType)
+    {
+
+    }
+
     virtual void Initialize() override
     {
         InitializeToLocation(0);
@@ -14,6 +22,6 @@ public:
 
     virtual void TransferToOpenGl() override
     {
-        SendToOpenGl(3, GL_DYNAMIC_DRAW);
+        SendToOpenGl(3, usageType);
     }
 };

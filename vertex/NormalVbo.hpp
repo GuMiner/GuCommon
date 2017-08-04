@@ -4,12 +4,12 @@
 #include <glm\vec3.hpp>
 #include "VboBase.hpp"
 
-class ColorVbo : public VboBase<glm::vec3>
+class NormalVbo : public VboBase<glm::vec3>
 {
     GLenum usageType;
 
 public:
-    ColorVbo(GLenum usageType = GL_DYNAMIC_DRAW)
+    NormalVbo(GLenum usageType = GL_DYNAMIC_DRAW)
         : usageType(usageType)
     {
 
@@ -17,7 +17,7 @@ public:
 
     virtual void Initialize() override
     {
-        InitializeToLocation(1);
+        InitializeToLocation(3);
     }
 
     virtual void TransferToOpenGl() override

@@ -6,7 +6,15 @@
 
 class UvVbo : public VboBase<glm::vec2>
 {
+    GLenum usageType;
+
 public:
+    UvVbo(GLenum usageType = GL_DYNAMIC_DRAW)
+        : usageType(usageType)
+    {
+
+    }
+
     virtual void Initialize() override
     {
         InitializeToLocation(2);
@@ -14,6 +22,6 @@ public:
 
     virtual void TransferToOpenGl() override
     {
-        SendToOpenGl(2, GL_DYNAMIC_DRAW);
+        SendToOpenGl(2, usageType);
     }
 };
