@@ -4,6 +4,7 @@
 #include <glm\vec3.hpp>
 #include "VboBase.hpp"
 
+// NOTE: This takes the place of the Color VBO
 class NormalVbo : public VboBase<glm::vec3>
 {
     GLenum usageType;
@@ -17,7 +18,7 @@ public:
 
     virtual void Initialize() override
     {
-        InitializeToLocation(3);
+        InitializeToLocation(1);
     }
 
     virtual void TransferToOpenGl() override
