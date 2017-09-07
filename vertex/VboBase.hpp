@@ -33,7 +33,7 @@ protected:
     }
 
 public:
-    virtual void Initialize() = 0;
+    virtual void SetupOpenGlBuffers() = 0;
     virtual void TransferToOpenGl() = 0;
 
     void Deinitialize()

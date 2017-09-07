@@ -16,7 +16,7 @@ public:
 
     }
 
-    virtual void Initialize() override
+    virtual void SetupOpenGlBuffers() override
     {
         InitializeToLocation(1);
     }
