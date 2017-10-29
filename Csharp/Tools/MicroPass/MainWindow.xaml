@@ -1,0 +1,24 @@
+﻿<Window x:Class="MicroPass.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MicroPass"
+        mc:Ignorable="d"
+        Title="Micro Password Helper"
+        MinHeight="275.416" MinWidth="338.429"
+        Height="317.416" Width="354.429" ResizeMode="NoResize">
+    <Grid Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+        <Label Content="Root Password:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0"/>
+        <PasswordBox x:Name="rootPasswordBox" Height="23" Margin="105,14,10,0" PasswordChar="*" VerticalAlignment="Top"/>
+        <Label Content="Accounts" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+        <ListBox x:Name="accountsBox" Margin="10,72,172,10" SelectionChanged="accountsBox_SelectionChanged"/>
+        <TextBox x:Name="newAccountBox" Margin="0,0,10,88" TextWrapping="Wrap" Text="" HorizontalAlignment="Right" Width="143" Height="23" VerticalAlignment="Bottom"/>
+        <TextBox x:Name="newAccountPasswordBox" Margin="0,0,10,35" TextWrapping="Wrap" Text="" HorizontalAlignment="Right" Width="143" Height="23" VerticalAlignment="Bottom"/>
+        <Button x:Name="encodeButton" Content="Encode" Margin="0,0,10,10" Click="encodeButton_Click" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75"/>
+        <Label Content="New Account" HorizontalAlignment="Right" Margin="0,0,72,116" Height="26" VerticalAlignment="Bottom"/>
+        <Label Content="New Username/Password" Margin="0,0,10,58" HorizontalAlignment="Right" Width="145" Height="26" VerticalAlignment="Bottom"/>
+        <TextBox x:Name="passwordBox" Margin="181,72,10,0" TextWrapping="Wrap" Text="&lt;Password&gt;" Height="23" VerticalAlignment="Top" Background="#FFE7F9E7"/>
+
+    </Grid>
+</Window>
